@@ -1,221 +1,143 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import {
-  Zap, ArrowRight, Users, Globe, BookOpen, Eye,
-  CheckCircle, Clock, Wrench, Shield,
-  TrendingUp, Sparkles, Cpu, Layers
-} from 'lucide-react';
-import { products } from '@/lib/products';
-import ProductCard from '@/components/product-card';
+import { useEffect } from 'react';
+import { Navbar } from '@/components/sections/navbar';
+import { HeroSection } from '@/components/sections/hero-section';
+import { StorySection } from '@/components/sections/story-section';
+import { TimelineSection } from '@/components/sections/timeline-section';
+import { BtsSection } from '@/components/sections/bts-section';
+import { ProjectsSection } from '@/components/sections/projects-section';
+import { ImpressionsSection } from '@/components/sections/impressions-section';
+import { DonationSection } from '@/components/sections/donation-section';
+import { TeamSection } from '@/components/sections/team-section';
+import { FaqSection } from '@/components/sections/faq-section';
+import { Footer } from '@/components/sections/footer';
+import Image from 'next/image';
+import { Linkedin, Instagram } from 'lucide-react';
 
-const stats = [
-  { label: 'Optometrists', value: '24,000+', icon: Users },
-  { label: 'Countries', value: '85+', icon: Globe },
-  { label: 'Resources', value: '2,500+', icon: BookOpen },
-  { label: 'Daily Readers', value: '8,400+', icon: Eye },
-];
-
-const extraFeatures = [
-  { title: 'Open Source', desc: 'Community-driven development, transparent and trusted.', icon: Shield },
-  { title: 'AI-Powered', desc: 'Smart learning paths, automated diagnostics, and insights.', icon: Cpu },
-  { title: 'Mobile First', desc: 'Access everything from any device, anywhere.', icon: Globe },
-  { title: 'Free Forever', desc: 'Core features always free for students and practitioners.', icon: CheckCircle },
-  { title: 'Privacy First', desc: 'Your data and patient info are always protected.', icon: Shield },
-  { title: 'Global Community', desc: 'Connect with optometrists across 85+ countries.', icon: Users },
-  { title: 'Clinical Focus', desc: 'Every tool built with clinical workflows in mind.', icon: Eye },
-  { title: 'Rapid Updates', desc: 'New features shipped every single week.', icon: TrendingUp },
-];
-
-function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    const duration = 1500;
-    const startTime = Date.now();
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * target));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    animate();
-  }, [target]);
-  return <div>{count.toLocaleString()}{suffix}</div>;
-}
-
-export default function Home() {
-  const [visibleCards, setVisibleCards] = useState(0);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => { setMounted(true); }, []);
-  useEffect(() => {
-    const t = setInterval(() => setVisibleCards((v) => (v < products.length ? v + 1 : v)), 120);
-    return () => clearInterval(t);
-  }, []);
-
-  const availCount = products.filter(p => p.status === 'available').length;
-  const upcomingCount = products.filter(p => p.status === 'upcoming' || p.status === 'beta').length;
-  const maintCount = products.filter(p => p.status === 'maintenance').length;
-
+/* Community CTA Section */
+function CommunitySection() {
   return (
-    <div className="min-h-screen">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-center gap-2">
-          <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs sm:text-sm font-medium">8 Products · 1 Ecosystem · Core features 100% free</span>
-        </div>
+    <section className="relative py-16 md:py-24 overflow-hidden" style={{ background: '#F0FDFA', borderTop: '3px solid var(--brutal-black)' }}>
+      {/* Decorative scattered stickers */}
+      <div className="pointer-events-none absolute -right-6 top-8 opacity-[0.08] hidden lg:block" style={{ transform: 'rotate(12deg)' }}>
+        <Image src="/stickers/phoenix-sticker.png" alt="" width={120} height={120} className="w-28 h-28 object-contain" aria-hidden="true" />
+      </div>
+      <div className="pointer-events-none absolute -left-6 bottom-12 opacity-[0.06] hidden lg:block" style={{ transform: 'rotate(-8deg)' }}>
+        <Image src="/stickers/ecosystem-sticker.png" alt="" width={100} height={100} className="w-24 h-24 object-contain" aria-hidden="true" />
       </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-white">
-        {/* Gradient Blobs */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-400/20 rounded-full blur-[100px] animate-blob" />
-        <div className="absolute top-40 right-10 w-96 h-96 bg-purple-400/20 rounded-full blur-[100px] animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-indigo-400/20 rounded-full blur-[100px] animate-blob animation-delay-4000" />
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-20 sm:pb-32">
-          <div className="text-center max-w-4xl mx-auto">
-            {/* Badge */}
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-8 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              <Sparkles className="h-4 w-4 text-blue-600" />
-              <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Built for the optometry community</span>
-            </div>
-
-            {/* Heading */}
-            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-gray-900 transition-all duration-700 delay-100 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-              The Future of{' '}
-              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-gradient-x bg-[length:200%_200%]">
-                Optometry
-              </span>
-              <br />
-              Starts Here
-            </h1>
-
-            <p className={`mt-6 text-base sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-200 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-              FocusLabs builds free, powerful tools for optometrists worldwide. Connect, learn, diagnose, and stay updated — all in one ecosystem.
-            </p>
-
-            {/* CTAs */}
-            <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 transition-all duration-700 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-              <Link
-                href="/products/focuslinks"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-sm sm:text-base font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg shadow-blue-200 transition-all hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
-              >
-                <Zap className="h-5 w-5" />
-                Explore All Products
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/products/optolib"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-sm sm:text-base font-bold text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-full border border-gray-200 transition-all hover:-translate-y-0.5"
-              >
-                Browse Resources
-              </Link>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mt-16 sm:mt-20 transition-all duration-700 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            {stats.map((s, i) => (
-              <div key={i} className="text-center p-6 rounded-3xl bg-white border border-gray-100 shadow-sm">
-                <s.icon className="h-6 w-6 text-blue-600 mx-auto mb-3" />
-                <div className="text-2xl sm:text-3xl font-black text-gray-900">
-                  <AnimatedCounter target={parseInt(s.value.replace(/[^0-9]/g, ''))} suffix={s.value.includes('+') ? '+' : ''} />
-                </div>
-                <div className="text-sm text-gray-500 mt-1 font-medium">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products Section */}
-      <section className="py-16 sm:py-24 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Our Products</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 mt-3">
-              Everything You Need,
-            </h2>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-400 mt-1">
-              In One Place
-            </h2>
-            <p className="mt-5 text-base sm:text-lg text-gray-500 max-w-xl mx-auto">
-              From professional networking to clinical simulators, from AI-powered learning to daily news — we cover every aspect of modern optometry.
-            </p>
-          </div>
-
-          {/* Status pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-            {[
-              { label: `${availCount} Available`, color: 'bg-emerald-50 text-emerald-700 border-emerald-100' },
-              { label: `${upcomingCount} Coming Soon`, color: 'bg-violet-50 text-violet-700 border-violet-100' },
-              { label: `${maintCount} Maintenance`, color: 'bg-amber-50 text-amber-700 border-amber-100' },
-            ].map((pill, i) => (
-              <span key={i} className={`px-3.5 py-1.5 rounded-full text-xs font-bold border ${pill.color}`}>{pill.label}</span>
-            ))}
-          </div>
-
-          {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
-            {products.map((p, i) => (
-              <div key={p.slug} className={`transition-all duration-500 ${i < visibleCards ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                <ProductCard product={p} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Section */}
-      <section className="py-16 sm:py-24 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Why FocusLabs</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 mt-3">Built Different</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {extraFeatures.map((f, i) => (
-              <div key={i} className="group p-6 rounded-3xl bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-xl hover:shadow-blue-900/5 hover:-translate-y-1 transition-all duration-300">
-                <div className="h-12 w-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors duration-300">
-                  <f.icon className="h-6 w-6 text-blue-600 group-hover:text-white transition-colors duration-300" />
-                </div>
-                <h3 className="text-base font-bold text-gray-900 mb-2">{f.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 sm:py-24 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-[2rem] sm:rounded-[2.5rem] bg-slate-900 p-8 sm:p-16 lg:p-20 text-center overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/30 rounded-full blur-[100px]" />
-            <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-500/20 rounded-full blur-[100px]" />
-            <div className="relative">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight">
-                Ready to Transform<br />Your Practice?
-              </h2>
-              <p className="text-base sm:text-lg text-slate-400 max-w-lg mx-auto mb-10">
-                Join 24,000+ optometrists already using FocusLabs. Start with Focuslinks — it&apos;s completely free.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/products/focuslinks" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-sm sm:text-base font-bold bg-white text-slate-900 rounded-xl shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all hover:scale-105 active:scale-95">
-                  Join Focuslinks Free <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="/products/optoscholar" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-sm sm:text-base font-bold text-white border border-white/20 hover:bg-white/10 rounded-xl transition-all">
-                  Join Beta Waitlist
-                </Link>
-              </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center relative z-10">
+        {/* Sticker accent */}
+        <div className="mb-6 flex justify-center">
+          <div className="sticker-float">
+            <div className="brutal-card-sm p-2" style={{ background: 'var(--brutal-teal)' }}>
+              <Image src="/stickers/optometrist-sticker.png" alt="Built for optometrists" width={48} height={48} className="h-10 w-10 md:h-12 md:w-12 object-contain" />
             </div>
           </div>
         </div>
-      </section>
+
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4" style={{ color: 'var(--brutal-black)' }}>
+          Join the <span className="brutal-underline" style={{ color: 'var(--brutal-teal)' }}>FocusLinks</span> Community
+        </h2>
+        <p className="text-lg max-w-xl mx-auto mb-8" style={{ color: 'var(--brutal-black)', opacity: 0.65 }}>
+          WhatsApp groups are chaos. FocusLinks is where real optometry conversations happen. Connect, learn, and build with us.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
+          <a
+            href="#products"
+            className="brutal-btn brutal-btn-primary"
+          >
+            🔗 Join FocusLinks Free
+          </a>
+          <a
+            href="https://www.instagram.com/focus_.in?igsh=dTY5MG96cHc5Zmhu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="brutal-btn brutal-btn-outline"
+          >
+            <Instagram className="h-5 w-5" /> Follow Updates
+          </a>
+        </div>
+        <div className="flex justify-center gap-3 md:gap-5 opacity-70 flex-wrap">
+          <div className="sticker-float"><Image src="/stickers/links-sticker.png" alt="FocusLinks is the community" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 object-contain" /></div>
+          <div className="sticker-float-alt"><Image src="/stickers/growth-sticker.png" alt="Growing together" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 object-contain" /></div>
+          <div className="sticker-wiggle"><Image src="/stickers/rising-sticker.png" alt="Rising together" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 object-contain" /></div>
+          <div className="sticker-float"><Image src="/stickers/idea-sticker.png" alt="Ideas start here" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 object-contain" /></div>
+          <div className="sticker-float-alt"><Image src="/stickers/care-sticker.png" alt="We care" width={56} height={56} className="w-10 h-10 md:w-12 md:h-12 object-contain" /></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Scroll Animation Observer */
+function ScrollObserver({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+    const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
+    revealElements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+  return <>{children}</>;
+}
+
+/* Marquee Banner */
+function MarqueeBanner() {
+  const items = [
+    '🔗 FocusLinks — The Core Platform',
+    '📹 Focus Meet — Secure Clinical Meetings',
+    '📋 Focus CaseX — Case Studies',
+    '📚 OptoLib — Knowledge Library',
+    '📷 OD Cam — Imaging Tool',
+    '🏥 Focus EMR — Clinical Records',
+    '🎧 Focus Cast — Audio Learning',
+  ];
+  return (
+    <div className="py-3 overflow-hidden" style={{ background: 'var(--brutal-yellow)', borderBottom: '2.5px solid var(--brutal-black)' }}>
+      <div className="brutal-marquee">
+        <div className="brutal-marquee-inner">
+          {[...items, ...items].map((item, i) => (
+            <span key={i} className="mx-6 text-sm font-bold whitespace-nowrap" style={{ color: 'var(--brutal-black)' }}>
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Main Page */
+export default function HomePage() {
+  return (
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--background)' }}>
+      <ScrollObserver>
+        <Navbar />
+        <MarqueeBanner />
+        <main className="flex-grow">
+          <HeroSection />
+          <StorySection />
+          <TimelineSection />
+          <BtsSection />
+          <ProjectsSection />
+          <ImpressionsSection />
+          <DonationSection />
+          <TeamSection />
+          <FaqSection />
+          <CommunitySection />
+        </main>
+        <Footer />
+      </ScrollObserver>
     </div>
   );
 }

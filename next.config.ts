@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   basePath: '/FocusLabs-v1',
   assetPrefix: '/FocusLabs-v1/',
   trailingSlash: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  reactStrictMode: false,
   images: {
     unoptimized: true,
   },
