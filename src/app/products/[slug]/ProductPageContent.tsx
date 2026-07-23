@@ -11,10 +11,10 @@ import { products, getProductBySlug } from '@/lib/products';
 import { getDemo } from '@/components/ui-demos';
 
 const statusConfig = {
-  available: { icon: CheckCircle, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20', label: 'Available Now' },
-  upcoming: { icon: Clock, color: 'text-violet-400', bg: 'bg-violet-500/10 border-violet-500/20', label: 'Coming Soon' },
-  maintenance: { icon: Wrench, color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', label: 'Under Maintenance' },
-  beta: { icon: FlaskConical, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20', label: 'Beta' },
+  available: { icon: CheckCircle, color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200', label: 'Available Now' },
+  upcoming: { icon: Clock, color: 'text-violet-700', bg: 'bg-violet-50 border-violet-200', label: 'Coming Soon' },
+  maintenance: { icon: Wrench, color: 'text-amber-700', bg: 'bg-amber-50 border-amber-200', label: 'Under Maintenance' },
+  beta: { icon: FlaskConical, color: 'text-blue-700', bg: 'bg-blue-50 border-blue-200', label: 'Beta' },
 };
 
 export default function ProductPageContent() {
@@ -26,11 +26,9 @@ export default function ProductPageContent() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-2">Product Not Found</h1>
-          <p className="text-neutral-400 mb-6">The product you&apos;re looking for doesn&apos;t exist.</p>
-          <Link href="/" className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300">
-            <ArrowLeft className="h-4 w-4" /> Back to Home
-          </Link>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Product Not Found</h1>
+          <p className="text-gray-500 mb-6">The product you&apos;re looking for doesn&apos;t exist.</p>
+          <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold"><ArrowLeft className="h-4 w-4" /> Back to Home</Link>
         </div>
       </div>
     );
@@ -39,119 +37,103 @@ export default function ProductPageContent() {
   const status = statusConfig[product.status];
   const StatusIcon = status.icon;
   const DemoComponent = getDemo(product.slug);
-
   const currentIndex = products.findIndex((p) => p.slug === slug);
   const prevProduct = currentIndex > 0 ? products[currentIndex - 1] : null;
   const nextProduct = currentIndex < products.length - 1 ? products[currentIndex + 1] : null;
-
   const relatedProducts = products.filter((p) => p.slug !== slug).slice(0, 3);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       {/* Breadcrumb */}
-      <div className="border-b border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3">
+      <div className="bg-white border-b border-gray-100">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-neutral-500 hover:text-white transition-colors">Home</Link>
-            <ChevronRight className="h-3.5 w-3.5 text-neutral-600" />
-            <span className="text-neutral-400">Products</span>
-            <ChevronRight className="h-3.5 w-3.5 text-neutral-600" />
-            <span className="text-white">{product.name}</span>
+            <Link href="/" className="text-gray-400 hover:text-gray-900 transition-colors font-medium">Home</Link>
+            <ChevronRight className="h-3.5 w-3.5 text-gray-300" />
+            <span className="text-gray-400 font-medium">Products</span>
+            <ChevronRight className="h-3.5 w-3.5 text-gray-300" />
+            <span className="text-gray-900 font-semibold">{product.name}</span>
           </div>
         </div>
       </div>
 
-      {/* Product Hero */}
-      <section className="relative overflow-hidden">
-        <div className={`absolute inset-0 bg-gradient-to-b ${product.gradient.replace('from-', 'from-').replace('to-', 'to-')}/5 via-transparent to-transparent opacity-50`} />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-3xl" />
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-white">
+        <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient.replace('from-', 'from-').replace('to-', 'to-')}/5`} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[100px]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 pt-12 sm:pt-16 pb-12">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-14">
           <div className="max-w-3xl">
-            {/* Back button */}
-            <Link href="/" className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mb-6">
+            <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-900 font-medium transition-colors mb-6">
               <ArrowLeft className="h-4 w-4" /> All Products
             </Link>
 
-            {/* Status + Rating */}
             <div className="flex flex-wrap items-center gap-3 mb-4">
-              <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${status.bg} ${status.color}`}>
-                <StatusIcon className="h-3.5 w-3.5" />
-                {status.label}
+              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border ${status.bg} ${status.color}`}>
+                <StatusIcon className="h-3.5 w-3.5" /> {status.label}
               </div>
               <div className="flex items-center gap-1.5">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className={`h-4 w-4 ${s <= Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : s - 0.5 <= product.rating ? 'text-amber-400 fill-amber-400/50' : 'text-neutral-700'}`} />
+                {[1,2,3,4,5].map((s) => (
+                  <Star key={s} className={`h-4 w-4 ${s <= Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`} />
                 ))}
-                <span className="text-sm font-medium text-white ml-1">{product.rating}</span>
-                <span className="text-sm text-neutral-500">({product.reviewCount.toLocaleString()} reviews)</span>
+                <span className="text-sm font-bold text-gray-900 ml-1">{product.rating}</span>
+                <span className="text-sm text-gray-400">({product.reviewCount.toLocaleString()} reviews)</span>
               </div>
             </div>
 
-            {/* Title */}
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-3">
-              {product.name}
-            </h1>
-            <p className="text-xl text-neutral-400 mb-6">{product.tagline}</p>
-            <p className="text-base text-neutral-300 leading-relaxed mb-8 max-w-2xl">{product.description}</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-gray-900 mb-3">{product.name}</h1>
+            <p className="text-lg sm:text-xl text-gray-500 mb-6">{product.tagline}</p>
+            <p className="text-base text-gray-600 leading-relaxed mb-8 max-w-2xl">{product.description}</p>
 
-            {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={product.ctaHref}
-                className={`inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-gradient-to-r ${product.gradient} text-white rounded-xl transition-all hover:shadow-lg hover:opacity-90`}
-              >
-                <Zap className="h-4 w-4" />
-                {product.ctaText}
+              <a href={product.ctaHref} className={`inline-flex items-center gap-2 px-6 py-3 text-sm font-bold bg-gradient-to-r ${product.gradient} text-white rounded-full shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5 active:scale-95`}>
+                <Zap className="h-4 w-4" /> {product.ctaText}
               </a>
               {product.secondaryCtaText && (
-                <a
-                  href={product.secondaryCtaHref}
-                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium border border-white/10 text-white hover:bg-white/5 rounded-xl transition-all"
-                >
+                <a href={product.secondaryCtaHref} className="inline-flex items-center gap-2 px-6 py-3 text-sm font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-full border border-gray-200 transition-all">
                   {product.secondaryCtaText}
                 </a>
               )}
-              <button className="p-3 rounded-xl border border-white/10 text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
-                <Heart className="h-4 w-4" />
-              </button>
-              <button className="p-3 rounded-xl border border-white/10 text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
-                <Share2 className="h-4 w-4" />
-              </button>
-              <button className="p-3 rounded-xl border border-white/10 text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
-                <Bookmark className="h-4 w-4" />
-              </button>
+              <div className="flex items-center gap-2 ml-2">
+                {[Heart, Share2, Bookmark].map((Icon, i) => (
+                  <button key={i} className="h-10 w-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all">
+                    <Icon className="h-4 w-4" />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Interactive Demo Section */}
-      <section className="py-12 sm:py-16 border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="text-center mb-8">
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Interactive Preview</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">See It in Action</h2>
-            <p className="text-sm text-neutral-400 mt-2">This is an animated UI demo — the real product has even more features.</p>
+      {/* Demo Section */}
+      {DemoComponent && (
+        <section className="py-12 sm:py-16 bg-gray-50">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Interactive Preview</span>
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 mt-2">See It in Action</h2>
+              <p className="text-sm text-gray-500 mt-2">Animated UI demo — the real product has even more.</p>
+            </div>
+            <DemoComponent />
           </div>
-          {DemoComponent && <DemoComponent />}
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Features Grid */}
-      <section className="py-12 sm:py-16 border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      {/* Features */}
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Features</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">What&apos;s Inside</h2>
+            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Features</span>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 mt-2">What&apos;s Inside</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {product.features.map((f, i) => (
-              <div key={i} className="flex items-start gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04] transition-all duration-300">
-                <div className={`h-6 w-6 rounded-md bg-gradient-to-br ${product.gradient} flex items-center justify-center shrink-0 mt-0.5`}>
-                  <CheckCircle className="h-3.5 w-3.5 text-white" />
+              <div key={i} className="flex items-start gap-3.5 p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-lg hover:shadow-blue-900/5 hover:-translate-y-0.5 transition-all duration-300">
+                <div className={`h-7 w-7 rounded-lg bg-gradient-to-br ${product.gradient} flex items-center justify-center shrink-0 mt-0.5`}>
+                  <CheckCircle className="h-4 w-4 text-white" />
                 </div>
-                <span className="text-sm text-neutral-300 leading-relaxed">{f}</span>
+                <span className="text-sm text-gray-700 leading-relaxed font-medium">{f}</span>
               </div>
             ))}
           </div>
@@ -159,137 +141,108 @@ export default function ProductPageContent() {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-12 sm:py-16 border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Technology</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">Built With</h2>
+            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Technology</span>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 mt-2">Built With</h2>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
             {product.techStack.map((tech, i) => (
-              <div key={i} className="px-4 py-2 rounded-xl border border-white/10 bg-white/5 text-sm font-medium text-neutral-300">
-                {tech}
-              </div>
+              <div key={i} className="px-5 py-2.5 rounded-xl bg-white border border-gray-200 text-sm font-semibold text-gray-700 shadow-sm">{tech}</div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Ratings & Reviews Summary */}
-      <section className="py-12 sm:py-16 border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Rating Overview */}
-            <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
-              <h3 className="text-lg font-semibold text-white mb-6">User Ratings</h3>
+      {/* Ratings */}
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-6">User Ratings</h3>
               <div className="flex items-center gap-6 mb-6">
-                <div className="text-5xl font-black text-white">{product.rating}</div>
+                <div className="text-5xl font-black text-gray-900">{product.rating}</div>
                 <div>
                   <div className="flex items-center gap-0.5 mb-1">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className={`h-5 w-5 ${s <= Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-neutral-700'}`} />
+                    {[1,2,3,4,5].map((s) => (
+                      <Star key={s} className={`h-5 w-5 ${s <= Math.floor(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`} />
                     ))}
                   </div>
-                  <p className="text-sm text-neutral-400">{product.reviewCount.toLocaleString()} reviews</p>
+                  <p className="text-sm text-gray-500 font-medium">{product.reviewCount.toLocaleString()} reviews</p>
                 </div>
               </div>
-              {/* Rating bars */}
-              {[5, 4, 3, 2, 1].map((stars) => {
+              {[5,4,3,2,1].map((stars) => {
                 const pct = stars === 5 ? 72 : stars === 4 ? 18 : stars === 3 ? 6 : stars === 2 ? 3 : 1;
                 return (
-                  <div key={stars} className="flex items-center gap-3 mb-2">
-                    <span className="text-xs text-neutral-400 w-3">{stars}</span>
+                  <div key={stars} className="flex items-center gap-3 mb-2.5">
+                    <span className="text-xs font-bold text-gray-500 w-3">{stars}</span>
                     <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
-                    <div className="flex-1 h-2 rounded-full bg-neutral-800">
-                      <div className="h-full rounded-full bg-amber-400" style={{ width: `${pct}%` }} />
+                    <div className="flex-1 h-2.5 rounded-full bg-gray-200">
+                      <div className="h-full rounded-full bg-amber-400 transition-all" style={{ width: `${pct}%` }} />
                     </div>
-                    <span className="text-xs text-neutral-500 w-8 text-right">{pct}%</span>
+                    <span className="text-xs text-gray-400 font-medium w-8 text-right">{pct}%</span>
                   </div>
                 );
               })}
             </div>
 
-            {/* Quick Stats */}
-            <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
-              <h3 className="text-lg font-semibold text-white mb-6">Product Stats</h3>
+            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900 mb-6">Product Stats</h3>
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-white/5">
-                  <Users className="h-5 w-5 text-emerald-400 mb-2" />
-                  <div className="text-2xl font-bold text-white">{(product.reviewCount * 1.5).toLocaleString()}</div>
-                  <div className="text-xs text-neutral-500">Active Users</div>
-                </div>
-                <div className="p-4 rounded-xl bg-white/5">
-                  <Globe className="h-5 w-5 text-emerald-400 mb-2" />
-                  <div className="text-2xl font-bold text-white">{Math.floor(product.reviewCount / 100)}</div>
-                  <div className="text-xs text-neutral-500">Countries</div>
-                </div>
-                <div className="p-4 rounded-xl bg-white/5">
-                  <Shield className="h-5 w-5 text-emerald-400 mb-2" />
-                  <div className="text-2xl font-bold text-white">99.9%</div>
-                  <div className="text-xs text-neutral-500">Uptime</div>
-                </div>
-                <div className="p-4 rounded-xl bg-white/5">
-                  <Zap className="h-5 w-5 text-emerald-400 mb-2" />
-                  <div className="text-2xl font-bold text-white">v2.{Math.floor(product.rating)}</div>
-                  <div className="text-xs text-neutral-500">Latest Version</div>
-                </div>
+                {[{ icon: Users, val: (product.reviewCount * 1.5).toLocaleString(), label: 'Active Users' }, { icon: Globe, val: Math.floor(product.reviewCount / 100).toString(), label: 'Countries' }, { icon: Shield, val: '99.9%', label: 'Uptime' }, { icon: Zap, val: 'v2.' + Math.floor(product.rating), label: 'Latest Version' }].map((s, i) => (
+                  <div key={i} className="p-5 rounded-2xl bg-white border border-gray-100">
+                    <s.icon className="h-5 w-5 text-blue-600 mb-2" />
+                    <div className="text-2xl font-black text-gray-900">{s.val}</div>
+                    <div className="text-xs text-gray-500 font-medium">{s.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Related Products */}
-      <section className="py-12 sm:py-16 border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="text-center mb-8">
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Explore More</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">You Might Also Like</h2>
+      {/* Related */}
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Explore More</span>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 mt-2">You Might Also Like</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedProducts.map((rp) => (
-              <Link
-                key={rp.slug}
-                href={`/products/${rp.slug}`}
-                className="group p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04] transition-all duration-300"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${rp.gradient} flex items-center justify-center text-sm font-bold text-white`}>{rp.name.charAt(0)}</div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">{rp.name}</h3>
-                    <p className="text-xs text-neutral-500">{rp.tagline}</p>
+              <Link key={rp.slug} href={`/products/${rp.slug}`} className="group flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100 hover:shadow-xl hover:shadow-blue-900/5 hover:-translate-y-1 transition-all duration-300">
+                <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${rp.gradient} flex items-center justify-center text-base font-extrabold text-white shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>{rp.name.charAt(0)}</div>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-bold text-gray-900 group-hover:text-blue-700 transition-colors">{rp.name}</h3>
+                  <p className="text-xs text-gray-500">{rp.tagline}</p>
+                  <div className="flex items-center gap-1.5 mt-1.5">
+                    <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
+                    <span className="text-xs font-bold text-gray-900">{rp.rating}</span>
+                    <span className="text-xs text-gray-400">({rp.reviewCount.toLocaleString()})</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Star className="h-3.5 w-3.5 text-amber-400 fill-amber-400" />
-                  <span className="text-sm font-medium text-white">{rp.rating}</span>
-                  <span className="text-xs text-neutral-500">({rp.reviewCount.toLocaleString()})</span>
-                </div>
+                <ArrowRight className="h-5 w-5 text-gray-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all ml-auto shrink-0" />
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Navigation */}
-      <div className="border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6 flex items-center justify-between">
+      {/* Nav */}
+      <div className="bg-white border-t border-gray-100">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
           {prevProduct ? (
-            <Link href={`/products/${prevProduct.slug}`} className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors">
-              <ArrowLeft className="h-4 w-4" />
-              <div>
-                <div className="text-[10px] text-neutral-600 uppercase">Previous</div>
-                <div>{prevProduct.name}</div>
-              </div>
+            <Link href={`/products/${prevProduct.slug}`} className="group flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors">
+              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              <div><div className="text-[10px] font-bold text-gray-300 uppercase tracking-wider">Previous</div><div className="font-bold">{prevProduct.name}</div></div>
             </Link>
           ) : <div />}
           {nextProduct ? (
-            <Link href={`/products/${nextProduct.slug}`} className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors text-right">
-              <div>
-                <div className="text-[10px] text-neutral-600 uppercase">Next</div>
-                <div>{nextProduct.name}</div>
-              </div>
-              <ArrowRight className="h-4 w-4" />
+            <Link href={`/products/${nextProduct.slug}`} className="group flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors text-right">
+              <div><div className="text-[10px] font-bold text-gray-300 uppercase tracking-wider">Next</div><div className="font-bold">{nextProduct.name}</div></div>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           ) : <div />}
         </div>

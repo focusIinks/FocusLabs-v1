@@ -31,14 +31,14 @@ export default function FocusMeetDemo() {
   }, []);
 
   return (
-    <div className="rounded-xl border border-white/10 bg-neutral-900/80 overflow-hidden w-full max-w-2xl mx-auto">
+    <div className="rounded-xl border border-gray-200 bg-white overflow-hidden w-full max-w-2xl mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-200">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-          <span className="text-sm font-semibold text-white">Case Review: Retinal OCT</span>
+          <span className="text-sm font-semibold text-gray-900">Case Review: Retinal OCT</span>
         </div>
-        <div className="flex items-center gap-3 text-[10px] text-neutral-400">
+        <div className="flex items-center gap-3 text-[10px] text-gray-500">
           <span>01:24:35</span>
           <span>4 participants</span>
         </div>
@@ -58,7 +58,7 @@ export default function FocusMeetDemo() {
               <div className={`h-12 w-12 rounded-full bg-gradient-to-br ${p.color} flex items-center justify-center text-sm font-bold text-white ${i === activeSpeaker ? 'scale-110' : ''} transition-transform duration-300`}>
                 {p.initials}
               </div>
-              <span className="text-[11px] text-white mt-2 font-medium">{p.name}</span>
+              <span className="text-[11px] text-gray-900 mt-2 font-medium">{p.name}</span>
             </div>
             {i === activeSpeaker && (
               <div className="absolute bottom-2 left-2 flex items-center gap-1">
@@ -78,12 +78,12 @@ export default function FocusMeetDemo() {
 
       {/* Chat Panel (animated) */}
       {showChat && (
-        <div className="border-t border-white/10 p-3 max-h-28 overflow-hidden animate-in">
+        <div className="border-t border-gray-200 p-3 max-h-28 overflow-hidden animate-in">
           <div className="space-y-2">
             {chatMsgs.slice(0, visibleChats).map((c, i) => (
               <div key={i} className="text-[11px]">
                 <span className="font-medium text-emerald-400">{c.user}:</span>
-                <span className="text-neutral-300 ml-1">{c.msg}</span>
+                <span className="text-gray-600 ml-1">{c.msg}</span>
               </div>
             ))}
           </div>
@@ -91,19 +91,19 @@ export default function FocusMeetDemo() {
       )}
 
       {/* Controls */}
-      <div className="flex items-center justify-center gap-2 px-4 py-3 border-t border-white/10">
+      <div className="flex items-center justify-center gap-2 px-4 py-3 border-t border-gray-200">
         {[
           { icon: Mic, active: true, color: 'text-emerald-400' },
           { icon: Video, active: true, color: 'text-emerald-400' },
-          { icon: MonitorUp, active: false, color: 'text-neutral-400' },
-          { icon: MessageSquare, active: false, color: 'text-neutral-400' },
-          { icon: MoreHorizontal, active: false, color: 'text-neutral-400' },
+          { icon: MonitorUp, active: false, color: 'text-gray-500' },
+          { icon: MessageSquare, active: false, color: 'text-gray-500' },
+          { icon: MoreHorizontal, active: false, color: 'text-gray-500' },
         ].map((ctrl, i) => (
-          <button key={i} className={`p-2.5 rounded-xl transition-colors ${ctrl.active ? 'bg-white/10 ' + ctrl.color : 'text-neutral-400 hover:bg-white/5'}`}>
+          <button key={i} className={`p-2.5 rounded-xl transition-colors ${ctrl.active ? 'bg-gray-100 ' + ctrl.color : 'text-gray-500 hover:bg-gray-50'}`}>
             <ctrl.icon className="h-4 w-4" />
           </button>
         ))}
-        <div className="w-px h-6 bg-white/10 mx-1" />
+        <div className="w-px h-6 bg-gray-200 mx-1" />
         <button className="p-2.5 rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors">
           <PhoneOff className="h-4 w-4" />
         </button>

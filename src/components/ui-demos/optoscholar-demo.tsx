@@ -34,11 +34,11 @@ export default function OptoscholarDemo() {
   }, []);
 
   return (
-    <div className="rounded-xl border border-white/10 bg-neutral-900/80 overflow-hidden w-full max-w-2xl mx-auto">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+    <div className="rounded-xl border border-gray-200 bg-white overflow-hidden w-full max-w-2xl mx-auto">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
         <div className="flex items-center gap-3">
           <GraduationCap className="h-4 w-4 text-amber-400" />
-          <span className="text-sm font-semibold text-white">Optoscholar</span>
+          <span className="text-sm font-semibold text-gray-900">Optoscholar</span>
           <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Beta</span>
         </div>
         <div className="flex items-center gap-3 text-[10px]">
@@ -48,22 +48,22 @@ export default function OptoscholarDemo() {
       </div>
       <div className="flex min-h-[220px]">
         {/* Sidebar */}
-        <div className="w-44 border-r border-white/10 p-3 space-y-3 hidden sm:block">
-          <span className="text-[10px] font-semibold text-neutral-500 uppercase tracking-wider">Topics</span>
+        <div className="w-44 border-r border-gray-200 p-3 space-y-3 hidden sm:block">
+          <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Topics</span>
           <div className="space-y-1">
             {topics.map((t, i) => (
-              <button key={i} onClick={() => setSelectedTopic(i)} className={`w-full text-left text-[11px] px-2.5 py-2 rounded-lg transition-all ${i === selectedTopic ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-neutral-400 hover:bg-white/5'}`}>
+              <button key={i} onClick={() => setSelectedTopic(i)} className={`w-full text-left text-[11px] px-2.5 py-2 rounded-lg transition-all ${i === selectedTopic ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-gray-500 hover:bg-gray-50'}`}>
                 {t}
               </button>
             ))}
           </div>
           {/* Progress */}
-          <div className="pt-2 border-t border-white/5">
+          <div className="pt-2 border-t border-gray-100">
             <div className="flex items-center justify-between text-[10px] mb-1.5">
-              <span className="text-neutral-400">Progress</span>
+              <span className="text-gray-500">Progress</span>
               <span className="text-amber-400">{progress}%</span>
             </div>
-            <div className="h-1.5 rounded-full bg-neutral-800">
+            <div className="h-1.5 rounded-full bg-gray-100">
               <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-500" style={{ width: `${progress}%` }} />
             </div>
           </div>
@@ -71,13 +71,13 @@ export default function OptoscholarDemo() {
         {/* Quiz Area */}
         <div className="flex-1 p-4">
           <div className="flex items-center gap-2 mb-3">
-            <BookOpen className="h-3.5 w-3.5 text-neutral-400" />
-            <span className="text-[11px] text-neutral-400">{topics[selectedTopic]} &middot; Q{selectedTopic * 5 + 3} of 50</span>
+            <BookOpen className="h-3.5 w-3.5 text-gray-500" />
+            <span className="text-[11px] text-gray-500">{topics[selectedTopic]} &middot; Q{selectedTopic * 5 + 3} of 50</span>
           </div>
-          <p className="text-sm font-medium text-white mb-4 leading-relaxed">{question}</p>
+          <p className="text-sm font-medium text-gray-900 mb-4 leading-relaxed">{question}</p>
           <div className="space-y-2">
             {options.map((opt, i) => {
-              let cls = 'border-white/10 text-neutral-300 hover:bg-white/5 hover:border-white/20';
+              let cls = 'border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300';
               if (showResult && i === correctIdx) cls = 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400';
               else if (showResult && selectedOpt === i && i !== correctIdx) cls = 'border-red-500/30 bg-red-500/10 text-red-400';
               else if (selectedOpt === i && !showResult) cls = 'border-amber-500/30 bg-amber-500/10 text-amber-400';
